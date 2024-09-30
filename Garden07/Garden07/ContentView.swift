@@ -15,32 +15,34 @@ struct ContentView: View {
 
     var body: some View {
         RealityView { content in
-            // Add the initial RealityKit content
-            if let scene = try? await Entity(named: "Scene", in: realityKitContentBundle) {
-                content.add(scene)
-            }
+
+            let model = ModelEntity(
+                mesh: .generateBox(size: 1, cornerRadius: 0.1),
+                materials: [SimpleMaterial(color: .green, roughness: 0, isMetallic: false)])
+            model.scale = .init(x: 0.95, y: 0.1, z: 0.95)
+            model.position = .init(x: 0, y: -0.4, z: 0)
+            content.add(model)
         } update: { content in
             // Update the RealityKit content when SwiftUI state changes
-            if let scene = content.entities.first {
-                let uniformScale: Float = enlarge ? 1.4 : 1.0
-                scene.transform.scale = [uniformScale, uniformScale, uniformScale]
-            }
-        }
-        .gesture(TapGesture().targetedToAnyEntity().onEnded { _ in
-            enlarge.toggle()
-        })
-        .toolbar {
-            ToolbarItemGroup(placement: .bottomOrnament) {
-                VStack (spacing: 12) {
-                    Button {
-                        enlarge.toggle()
-                    } label: {
-                        Text(enlarge ? "Reduce RealityView Content" : "Enlarge RealityView Content")
-                    }
-                    .animation(.none, value: 0)
-                    .fontWeight(.semibold)
 
-                    ToggleImmersiveSpaceButton()
+        }
+
+
+    }
+
+    struct Flower: View {
+        var body: some View {
+            Text("🌸")
+                .font(.system(size: 72))
+                .hoverEffect(ScaleHoverEffect())
+        }
+    }
+
+    struct ScaleHoverEffect: CustomHoverEffect {
+        func body(content: Content) -> some CustomHoverEffect {
+            content.hoverEffect { effect, isActive, proxy in
+                effect.animation(.easeOut) {
+                    $0.scaleEffect(isActive ? CGSize(width: 0.4, height: 0.4) : CGSize(width: 1, height: 1), anchor: .bottom)
                 }
             }
         }
