@@ -25,7 +25,11 @@ struct Garden07App: App {
                 .environment(appModel)
         }
         .windowStyle(.volumetric)
-        
-
+        .defaultWindowPlacement { _, context in
+            if let mainWindow = context.windows.first {
+                return WindowPlacement(.trailing(mainWindow))
+            }
+            return WindowPlacement(.none)
+        }
     }
 }

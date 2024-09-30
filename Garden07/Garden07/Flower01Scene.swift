@@ -17,28 +17,28 @@ struct Flower01Scene: View {
             }
 
             .ornament(attachmentAnchor: .scene(.bottomLeadingBack)) {
-                Text("⚫️")
+                Text("🌸")
             }
             .ornament(attachmentAnchor: .scene(.bottomLeadingFront)) {
-                Text("⚫️")
+                Text("🌸")
             }
             .ornament(attachmentAnchor: .scene(.bottomTrailingBack)) {
-                Text("⚫️")
+                Text("🌸")
             }
             .ornament(attachmentAnchor: .scene(.bottomTrailingFront)) {
-                Text("⚫️")
+                Text("🌸")
             }
             .ornament(attachmentAnchor: .scene(.topLeadingBack)) {
-                Text("⚫️")
+                Text("🌸")
             }
             .ornament(attachmentAnchor: .scene(.topLeadingFront)) {
-                Text("⚫️")
+                Text("🌸")
             }
             .ornament(attachmentAnchor: .scene(.topTrailingBack)) {
-                Text("⚫️")
+                Text("🌸")
             }
             .ornament(attachmentAnchor: .scene(.topTrailingFront)) {
-                Text("⚫️")
+                Text("🌸")
             }
 
     }

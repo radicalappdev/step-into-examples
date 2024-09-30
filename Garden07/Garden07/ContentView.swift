@@ -11,9 +11,6 @@ import RealityKitContent
 
 struct ContentView: View {
     @Environment(\.openWindow) var openWindow
-    @Environment(\.dismissWindow) var dismissWindow
-
-    @State private var enlarge = false
 
     var body: some View {
         RealityView { content, attachments in
@@ -29,8 +26,8 @@ struct ContentView: View {
             let groundModel = ModelEntity(
                 mesh: .generateBox(size: 1, cornerRadius: 0.1),
                 materials: [groundMat])
-            groundModel.scale = .init(x: 0.95, y: 0.05, z: 0.95)
-            groundModel.position = .init(x: 0, y: -0.4, z: 0)
+            groundModel.scale = .init(x: 0.8, y: 0.025, z: 0.8)
+            groundModel.position = .init(x: 0, y: -0.44, z: 0)
             content.add(groundModel)
 
             if let flower01 = attachments.entity(for: "🌸") {
