@@ -14,38 +14,37 @@ struct ContentView: View {
     @State private var enlarge = false
 
     var body: some View {
-        RealityView { content in
+        RealityView { content, attachments in
 
-            let model = ModelEntity(
+            // Create a material for the ground
+            var groundMat = PhysicallyBasedMaterial()
+            groundMat.baseColor.tint = .init(.green)
+            groundMat.roughness = 0.0
+            groundMat.metallic = 0.0
+
+            // Create the ground as a simple box
+            let groundModel = ModelEntity(
                 mesh: .generateBox(size: 1, cornerRadius: 0.1),
-                materials: [SimpleMaterial(color: .green, roughness: 0, isMetallic: false)])
-            model.scale = .init(x: 0.95, y: 0.1, z: 0.95)
-            model.position = .init(x: 0, y: -0.4, z: 0)
-            content.add(model)
-        } update: { content in
+                materials: [groundMat])
+            groundModel.scale = .init(x: 0.95, y: 0.1, z: 0.95)
+            groundModel.position = .init(x: 0, y: -0.4, z: 0)
+            content.add(groundModel)
+
+            if let attachmentEntity = attachments.entity(for: "🌸") {
+                attachmentEntity.position = [0, -0.25, 0]
+                content.add(attachmentEntity)
+            }
+
+        } update: { content, attachments in
             // Update the RealityKit content when SwiftUI state changes
 
-        }
-
-
-    }
-
-    struct Flower: View {
-        var body: some View {
-            Text("🌸")
-                .font(.system(size: 72))
-                .hoverEffect(ScaleHoverEffect())
-        }
-    }
-
-    struct ScaleHoverEffect: CustomHoverEffect {
-        func body(content: Content) -> some CustomHoverEffect {
-            content.hoverEffect { effect, isActive, proxy in
-                effect.animation(.easeOut) {
-                    $0.scaleEffect(isActive ? CGSize(width: 0.4, height: 0.4) : CGSize(width: 1, height: 1), anchor: .bottom)
-                }
+        } attachments: {
+            Attachment(id: "🌸") {
+                Flower2D(flowerEmoji: "🌸")
             }
         }
+
+
     }
 }
 
