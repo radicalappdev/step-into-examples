@@ -10,11 +10,14 @@ import RealityKit
 import RealityKitContent
 
 struct ContentView: View {
+    @Environment(\.openWindow) var openWindow
+    @Environment(\.dismissWindow) var dismissWindow
 
     @State private var enlarge = false
 
     var body: some View {
         RealityView { content, attachments in
+            // Set up the main content for the RealityView
 
             // Create a material for the ground
             var groundMat = PhysicallyBasedMaterial()
@@ -26,25 +29,28 @@ struct ContentView: View {
             let groundModel = ModelEntity(
                 mesh: .generateBox(size: 1, cornerRadius: 0.1),
                 materials: [groundMat])
-            groundModel.scale = .init(x: 0.95, y: 0.1, z: 0.95)
+            groundModel.scale = .init(x: 0.95, y: 0.05, z: 0.95)
             groundModel.position = .init(x: 0, y: -0.4, z: 0)
             content.add(groundModel)
 
-            if let attachmentEntity = attachments.entity(for: "🌸") {
-                attachmentEntity.position = [0, -0.25, 0]
-                content.add(attachmentEntity)
+            if let flower01 = attachments.entity(for: "🌸") {
+                flower01.position = [0, -0.25, 0]
+                content.add(flower01)
+
             }
 
         } update: { content, attachments in
             // Update the RealityKit content when SwiftUI state changes
 
         } attachments: {
+            // Pass in ant SwiftUI views as attachments
             Attachment(id: "🌸") {
                 Flower2D(flowerEmoji: "🌸")
+                    .onTapGesture {
+                        openWindow(id: "🌸")
+                    }
             }
         }
-
-
     }
 }
 

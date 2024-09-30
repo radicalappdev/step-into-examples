@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct Flower2D: View {
+
     @State var flowerEmoji: String = "🌸"
 
     var body: some View {
         Text(flowerEmoji)
             .font(.system(size: 96))
             .hoverEffect(ScaleHoverEffect())
+            
 
     }
     struct ScaleHoverEffect: CustomHoverEffect {

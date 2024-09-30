@@ -20,5 +20,12 @@ struct Garden07App: App {
         .windowStyle(.volumetric)
 
 
+        WindowGroup(id: "🌸") {
+            Flower01Scene()
+                .environment(appModel)
+        }
+        .windowStyle(.volumetric)
+        
+
     }
 }
