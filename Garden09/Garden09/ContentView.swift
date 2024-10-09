@@ -12,19 +12,32 @@ import RealityKitContent
 struct ContentView: View {
 
     @Environment(\.openWindow) var openWindow
+    @Environment(\.dismissWindow) var dismissWindow
+
+    @State var isOpened: Bool = false
 
     var body: some View {
         VStack(spacing: 24) {
-            Text("Window Garden 🌸")
+            Text("Default Placement with Volumes")
+                .multilineTextAlignment(.center)
                 .font(.extraLargeTitle2)
 
             Button(action: {
-                openWindow(id: "VolumeLeading")
-                openWindow(id: "VolumeTrailing")
-                openWindow(id: "VolumeBelow")
-                openWindow(id: "VolumeAbove")
+                if(isOpened) {
+                    dismissWindow(id: "VolumeLeading")
+                    dismissWindow(id: "VolumeTrailing")
+                    dismissWindow(id: "VolumeBelow")
+                    dismissWindow(id: "VolumeAbove")
+                    isOpened.toggle()
+                } else {
+                    openWindow(id: "VolumeLeading")
+                    openWindow(id: "VolumeTrailing")
+                    openWindow(id: "VolumeBelow")
+                    openWindow(id: "VolumeAbove")
+                    isOpened.toggle()
+                }
             }, label: {
-                Label("Open Windows", systemImage: "inset.filled.center.rectangle.badge.plus")
+                Label(isOpened ? "Close Volumes" :"Open Volumes", systemImage: "cube.fill")
             })
         }
         .padding()

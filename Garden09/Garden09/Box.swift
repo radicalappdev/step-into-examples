@@ -13,7 +13,7 @@ struct Box: View {
         RealityView { content in
             let model = ModelEntity(
                 mesh: .generateBox(size: 0.8, cornerRadius: 0),
-                materials: [SimpleMaterial(color: .systemBlue, isMetallic: false)])
+                materials: [SimpleMaterial(color: .black, isMetallic: false)])
             content.add(model)
         }
     }
