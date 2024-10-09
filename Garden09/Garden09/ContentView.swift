@@ -20,10 +20,9 @@ struct ContentView: View {
 
             Button(action: {
                 openWindow(id: "VolumeLeading")
-//                openWindow(id: "RedFlower")
-//                openWindow(id: "PurpleFlower")
-//                openWindow(id: "PinkFlower")
-//                openWindow(id: "Rocks")
+                openWindow(id: "VolumeTrailing")
+                openWindow(id: "VolumeBelow")
+                openWindow(id: "VolumeAbove")
             }, label: {
                 Label("Open Windows", systemImage: "inset.filled.center.rectangle.badge.plus")
             })

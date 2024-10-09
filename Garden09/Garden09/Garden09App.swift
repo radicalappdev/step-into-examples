@@ -30,5 +30,38 @@ struct Garden09App: App {
             return WindowPlacement(.none)
         }
 
+        WindowGroup(id: "VolumeTrailing") {
+            Box()
+        }
+        .windowStyle(.volumetric)
+        .defaultWindowPlacement { _, context in
+            if let mainWindow = context.windows.first {
+                return WindowPlacement(.trailing(mainWindow))
+            }
+            return WindowPlacement(.none)
+        }
+
+        WindowGroup(id: "VolumeBelow") {
+            Box()
+        }
+        .windowStyle(.volumetric)
+        .defaultWindowPlacement { _, context in
+            if let mainWindow = context.windows.first {
+                return WindowPlacement(.below(mainWindow))
+            }
+            return WindowPlacement(.none)
+        }
+
+        WindowGroup(id: "VolumeAbove") {
+            Box()
+        }
+        .windowStyle(.volumetric)
+        .defaultWindowPlacement { _, context in
+            if let mainWindow = context.windows.first {
+                return WindowPlacement(.above(mainWindow))
+            }
+            return WindowPlacement(.none)
+        }
+
     }
 }
