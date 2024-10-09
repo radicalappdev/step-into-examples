@@ -13,11 +13,21 @@ struct Garden09App: App {
     @State private var appModel = AppModel()
 
     var body: some Scene {
+
+        // Initial scene as a window
+//        WindowGroup {
+//            ContentView()
+//                .environment(appModel)
+//        }
+//        .defaultSize(width: 500, height: 500)
+
+        // Initial scene as a Volume
         WindowGroup {
-            ContentView()
+            VolumeExample()
                 .environment(appModel)
         }
-        .defaultSize(width: 500, height: 500)
+        .windowStyle(.volumetric)
+
 
         WindowGroup(id: "VolumeLeading") {
             Box()
@@ -65,3 +75,6 @@ struct Garden09App: App {
 
     }
 }
+
+
+
