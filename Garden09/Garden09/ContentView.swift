@@ -11,13 +11,22 @@ import RealityKitContent
 
 struct ContentView: View {
 
+    @Environment(\.openWindow) var openWindow
+
     var body: some View {
-        VStack {
-            Model3D(named: "Scene", bundle: realityKitContentBundle)
-                .padding(.bottom, 50)
+        VStack(spacing: 24) {
+            Text("Window Garden 🌸")
+                .font(.extraLargeTitle2)
 
-            Text("Hello, world!")
-
+            Button(action: {
+                openWindow(id: "VolumeLeading")
+//                openWindow(id: "RedFlower")
+//                openWindow(id: "PurpleFlower")
+//                openWindow(id: "PinkFlower")
+//                openWindow(id: "Rocks")
+            }, label: {
+                Label("Open Windows", systemImage: "inset.filled.center.rectangle.badge.plus")
+            })
         }
         .padding()
     }
