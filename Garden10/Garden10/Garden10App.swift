@@ -13,6 +13,8 @@ struct Garden10App: App {
     @State private var appModel = AppModel()
 
     var body: some Scene {
+
+        // As of October 2024, using pushWindow with volumes is not supported
         WindowGroup(id: "SplashScreen") {
             SplashScreen()
         }
