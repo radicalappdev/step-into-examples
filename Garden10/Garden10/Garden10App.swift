@@ -13,7 +13,12 @@ struct Garden10App: App {
     @State private var appModel = AppModel()
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "SplashScreen") {
+            SplashScreen()
+        }
+        .windowStyle(.volumetric)
+
+        WindowGroup(id: "MainWindow") {
             ContentView()
                 .environment(appModel)
         }
