@@ -11,10 +11,10 @@ import RealityKitContent
 
 struct ContentView: View {
 
-
+    @State var showBasePlate = true
 
     var body: some View {
-        RealityView { content, attachments in
+        RealityView { content in
             // Set up the main content for the RealityView
 
             // Create a material for the ground
@@ -31,24 +31,21 @@ struct ContentView: View {
             groundModel.position = .init(x: 0, y: -0.44, z: 0)
             content.add(groundModel)
 
-            if let flower01 = attachments.entity(for: "🌸") {
-                flower01.position = [0, -0.25, 0]
-                content.add(flower01)
 
-            }
 
-        } update: { content, attachments in
-            // Update the RealityKit content when SwiftUI state changes
-
-        } attachments: {
-            // Pass in ant SwiftUI views as attachments
-            Attachment(id: "🌸") {
-                Flower2D(flowerEmoji: "🌸")
-                    .onTapGesture {
-                        //
-                    }
-            }
+        } update: { content in
         }
+        .toolbar() {
+            ToolbarItem(placement: .bottomOrnament, content: {
+                Button(action: {
+                    showBasePlate.toggle()
+                }, label: {
+                    Image(systemName: showBasePlate ? "rectangle" : "rectangle.slash" )
+                    Text("Toggle Baseplate")
+                })
+            })
+        }
+        .volumeBaseplateVisibility(showBasePlate ? .visible : .hidden)
 
     }
 }

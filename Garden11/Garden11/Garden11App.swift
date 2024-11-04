@@ -16,6 +16,7 @@ struct Garden11App: App {
         WindowGroup {
             ContentView()
                 .environment(appModel)
+                
         }
         .windowStyle(.volumetric)
 
