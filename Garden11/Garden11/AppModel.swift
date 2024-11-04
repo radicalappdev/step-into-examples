@@ -11,5 +11,7 @@ import SwiftUI
 @MainActor
 @Observable
 class AppModel {
-    
+
+    var allowTilt = true
+
 }

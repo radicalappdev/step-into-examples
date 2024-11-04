@@ -10,6 +10,7 @@ import RealityKit
 import RealityKitContent
 
 struct ContentView: View {
+    @Environment(AppModel.self) var appModel
 
     @State var showBasePlate = true
 
@@ -32,16 +33,25 @@ struct ContentView: View {
         }
         .toolbar() {
             ToolbarItem(placement: .bottomOrnament, content: {
-                Button(action: {
-                    showBasePlate.toggle()
-                }, label: {
-                    Image(systemName: showBasePlate ? "rectangle" : "rectangle.slash" )
-                    Text("Toggle Baseplate")
-                })
+                HStack {
+                    Button(action: {
+                        showBasePlate.toggle()
+                    }, label: {
+                        Image(systemName: showBasePlate ? "rectangle" : "rectangle.slash" )
+                        Text("Toggle Baseplate")
+                    })
+                    Button(action: {
+                        appModel.allowTilt.toggle()
+                    }, label: {
+                        Image(systemName: appModel.allowTilt ? "rectangle" : "rectangle.slash" )
+                        Text("Toggle Alignment")
+                    })
+
+                }
             })
         }
         .volumeBaseplateVisibility(showBasePlate ? .visible : .hidden)
-        
+
     }
 }
 
