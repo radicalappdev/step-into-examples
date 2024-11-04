@@ -19,7 +19,6 @@ struct Garden11App: App {
                 
         }
         .windowStyle(.volumetric)
-        .volumeWorldAlignment(appModel.allowTilt ? .adaptive : .gravityAligned)
-
+        .volumeWorldAlignment(appModel.allowTilt ? .automatic : .gravityAligned)
     }
 }
