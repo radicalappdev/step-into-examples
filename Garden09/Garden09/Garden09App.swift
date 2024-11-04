@@ -31,6 +31,7 @@ struct Garden09App: App {
 
         WindowGroup(id: "VolumeLeading") {
             Box()
+                .environment(appModel)
         }
         .windowStyle(.volumetric)
         .defaultWindowPlacement { _, context in
