@@ -7,37 +7,73 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["GlassSphere", "GridMaterial", "SimpleGlass"]
-    def Sphere "GlassSphere" (
+    reorder nameChildren = ["GlassSphere", "Sphere", "SimpleGlass"]
+    def Xform "GlassSphere" (
         active = true
-        prepend apiSchemas = ["MaterialBindingAPI"]
     )
     {
-        rel material:binding = </Root/SimpleGlass> (
-            bindMaterialAs = "weakerThanDescendants"
+        reorder nameChildren = ["SimpleGlass", "Sphere"]
+        def Sphere "Sphere" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
         )
-        double radius = 0.1
-        quatf xformOp:orient = (1, 0, 0, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0.5, 1.5, -1.5)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-    }
-
-    def Material "SimpleGlass"
-    {
-        token outputs:mtlx:surface
-        token outputs:realitykit:vertex
-        token outputs:surface.connect = </Root/SimpleGlass/UsdPreviewSurface.outputs:surface>
-
-        def Shader "UsdPreviewSurface"
         {
-            uniform token info:id = "UsdPreviewSurface"
-            float inputs:clearcoat = 0.5
-            color3f inputs:diffuseColor = (0, 0, 0) (
-                colorSpace = "lin_srgb"
+            rel material:binding = </Root/GlassSphere/SimpleGlass> (
+                bindMaterialAs = "weakerThanDescendants"
             )
-            float inputs:opacity = 0.3
-            token outputs:surface
+            double radius = 0.1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Material "SimpleGlass"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            token outputs:surface.connect = </Root/GlassSphere/SimpleGlass/UsdPreviewSurface.outputs:surface>
+
+            def Shader "UsdPreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0.5
+                color3f inputs:diffuseColor = (0, 0, 0) (
+                    colorSpace = "lin_srgb"
+                )
+                float inputs:opacity = 0.3
+                token outputs:surface
+            }
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </Root/GlassSphere/OnAddedToScene>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </Root/GlassSphere/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </Root/GlassSphere/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/GlassSphere>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/Controller>
+                rel animationLibraryKeyOverrideKey = </Root/GlassSphere/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 }
