@@ -12,14 +12,22 @@ import RealityKitContent
 struct ImmersiveView: View {
 
     var body: some View {
-        RealityView { content in
-            // Add the initial RealityKit content
+        RealityView { content, attachments in
+
             if let immersiveContentEntity = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
                 content.add(immersiveContentEntity)
 
-                // Put skybox here.  See example in World project available at
-                // https://developer.apple.com/
+                if let glassSphere = immersiveContentEntity.findEntity(named: "GlassSphere") {
+
+                let clone = glassSphere.clone(recursive: true)
+                    content.add(clone)
+                    clone.position = .init(x: 0.7, y: 1.5, z: -1.5)
+                }
+
+
             }
+        } update: { content, attachments in
+        } attachments: {
         }
     }
 }

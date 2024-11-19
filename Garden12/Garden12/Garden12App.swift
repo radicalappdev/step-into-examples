@@ -17,6 +17,7 @@ struct Garden12App: App {
             ContentView()
                 .environment(appModel)
         }
+        .defaultSize(CGSize(width: 600, height: 600))
 
         ImmersiveSpace(id: appModel.immersiveSpaceID) {
             ImmersiveView()
@@ -28,6 +29,6 @@ struct Garden12App: App {
                     appModel.immersiveSpaceState = .closed
                 }
         }
-        .immersionStyle(selection: .constant(.mixed), in: .mixed)
-     }
+        //        .immersionStyle(selection: .constant(.full), in: .full)
+    }
 }

@@ -7,13 +7,13 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Sphere_Left", "Sphere_Right", "GridMaterial"]
-    def Sphere "Sphere_Right" (
+    reorder nameChildren = ["GlassSphere", "GridMaterial", "SimpleGlass"]
+    def Sphere "GlassSphere" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
     )
     {
-        rel material:binding = </Root/GridMaterial/GridMaterial> (
+        rel material:binding = </Root/SimpleGlass> (
             bindMaterialAs = "weakerThanDescendants"
         )
         double radius = 0.1
@@ -23,28 +23,22 @@ def Xform "Root"
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 
-    def Sphere "Sphere_Left" (
-        active = true
-        prepend apiSchemas = ["MaterialBindingAPI"]
-    )
+    def Material "SimpleGlass"
     {
-        rel material:binding = </Root/GridMaterial/GridMaterial> (
-            bindMaterialAs = "weakerThanDescendants"
-        )
-        double radius = 0.1
-        quatf xformOp:orient = (1, 0, 0, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (-0.5, 1.5, -1.5)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-    }
+        token outputs:mtlx:surface
+        token outputs:realitykit:vertex
+        token outputs:surface.connect = </Root/SimpleGlass/UsdPreviewSurface.outputs:surface>
 
-    def "GridMaterial" (
-        active = true
-        prepend references = @Materials/GridMaterial.usda@
-    )
-    {
-        float3 xformOp:scale = (1, 1, 1)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        def Shader "UsdPreviewSurface"
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            float inputs:clearcoat = 0.5
+            color3f inputs:diffuseColor = (0, 0, 0) (
+                colorSpace = "lin_srgb"
+            )
+            float inputs:opacity = 0.3
+            token outputs:surface
+        }
     }
 }
 

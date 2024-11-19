@@ -12,11 +12,15 @@ import RealityKitContent
 struct ContentView: View {
 
     var body: some View {
-        VStack {
-            Model3D(named: "Scene", bundle: realityKitContentBundle)
-                .padding(.bottom, 50)
+        VStack(spacing: 24) {
 
-            Text("Hello, world!")
+            Text("🌸")
+                .font(.extraLargeTitle2)
+            Text("Window Garden")
+                .font(.title)
+            Text("Immersive Spaces")
+                .font(.extraLargeTitle)
+
 
             ToggleImmersiveSpaceButton()
         }
@@ -27,4 +31,5 @@ struct ContentView: View {
 #Preview(windowStyle: .automatic) {
     ContentView()
         .environment(AppModel())
+
 }
