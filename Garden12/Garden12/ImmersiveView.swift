@@ -10,18 +10,48 @@ import RealityKit
 import RealityKitContent
 
 struct ImmersiveView: View {
+
+    @State var sceneColor: Color = .pink
+
+    let colors: [Color] = [
+        .red,
+        .blue,
+        .pink,
+        .green,
+        .purple,
+        .orange,
+        .cyan,
+        .indigo
+    ]
+
     var body: some View {
         RealityView { content in
             if let root = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
                 content.add(root)
 
                 if let glassSphere = root.findEntity(named: "GlassSphere") {
+                    glassSphere.components[HoverEffectComponent.self] = .init()
                     createClones(root, glassSphere: glassSphere)
                 }
             }
         }
-        .preferredSurroundingsEffect(.colorMultiply(.pink))
+        .preferredSurroundingsEffect(.colorMultiply(sceneColor))
+        .gesture(tap)
     }
+
+    var tap: some Gesture {
+        TapGesture()
+            .targetedToAnyEntity()
+            .onEnded { value in
+                // Ensure the new color is different from the current sceneColor
+                let availableColors = colors.filter { $0 != sceneColor }
+                if let newColor = availableColors.randomElement() {
+                    sceneColor = newColor
+                }
+                value.entity.removeFromParent()
+            }
+    }
+
 
     func createClones(_ root: Entity, glassSphere: Entity) {
         let centerPos = SIMD3<Float>(0, 1.5, 0)
