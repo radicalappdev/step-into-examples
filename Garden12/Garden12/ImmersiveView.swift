@@ -11,7 +11,7 @@ import RealityKitContent
 
 struct ImmersiveView: View {
     var body: some View {
-        RealityView { content, attachments in
+        RealityView { content in
             if let root = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
                 content.add(root)
 
@@ -19,10 +19,8 @@ struct ImmersiveView: View {
                     createClones(root, glassSphere: glassSphere)
                 }
             }
-        } update: { content, attachments in
-        } attachments: {
-
         }
+        .preferredSurroundingsEffect(.colorMultiply(.pink))
     }
 
     func createClones(_ root: Entity, glassSphere: Entity) {
@@ -43,8 +41,3 @@ struct ImmersiveView: View {
         }
     }
 }
-//
-//#Preview(immersionStyle: .mixed) {
-//    ImmersiveView()
-//        .environment(AppModel())
-//}

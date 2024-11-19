@@ -11,18 +11,40 @@ import RealityKitContent
 
 struct ContentView: View {
 
+    @State var isImmersiveSpacePresented: Bool = false
+
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+
     var body: some View {
         VStack(spacing: 24) {
 
-            Text("🌸")
+            Text("🫧")
                 .font(.extraLargeTitle2)
-            Text("Window Garden")
+            Text("Bubble Garden")
                 .font(.title)
             Text("Immersive Spaces")
                 .font(.extraLargeTitle)
 
+            Button(action: {
+                Task {
+                    await openImmersiveSpace(id: "GardenScene")
+                    isImmersiveSpacePresented = true
+                }
+            }, label: {
+                Text("Open Immersive Space")
+            })
+            .disabled(isImmersiveSpacePresented)
 
-            ToggleImmersiveSpaceButton()
+            Button(action: {
+                Task {
+                    await dismissImmersiveSpace()
+                    isImmersiveSpacePresented = false
+                }
+            }, label: {
+                Text("Close Immersive Space")
+            })
+            .disabled(!isImmersiveSpacePresented)
         }
         .padding()
     }
