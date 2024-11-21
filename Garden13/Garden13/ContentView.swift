@@ -13,7 +13,6 @@ struct ContentView: View {
 
     @Environment(AppModel.self) private var appModel
 
-    @State var isImmersiveSpacePresented: Bool = false
 
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
@@ -32,23 +31,17 @@ struct ContentView: View {
 
             Button(action: {
                 Task {
-                    await openImmersiveSpace(id: "GardenScene")
-                    isImmersiveSpacePresented = true
+                    if(appModel.gardenOpen) {
+                        await dismissImmersiveSpace()
+                        return
+                    } else if (!appModel.gardenOpen) {
+                        await openImmersiveSpace(id: "GardenScene")
+                    }
                 }
             }, label: {
-                Text("Open Immersive Space")
+                Text(appModel.gardenOpen ? "Close Immersive Space" :"Open Immersive Space")
             })
-            .disabled(isImmersiveSpacePresented)
 
-            Button(action: {
-                Task {
-                    await dismissImmersiveSpace()
-                    isImmersiveSpacePresented = false
-                }
-            }, label: {
-                Text("Close Immersive Space")
-            })
-            .disabled(!isImmersiveSpacePresented)
         }
         .padding()
         .onChange(of: scenePhase, initial: true) {
