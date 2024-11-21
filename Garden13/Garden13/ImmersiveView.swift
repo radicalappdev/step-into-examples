@@ -11,6 +11,9 @@ import RealityKitContent
 
 struct ImmersiveView: View {
 
+    @Environment(AppModel.self) private var appModel
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some View {
         RealityView { content in
             if let root = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
@@ -24,6 +27,16 @@ struct ImmersiveView: View {
         }
         .preferredSurroundingsEffect(.colorMultiply(.stepBack02))
         .gesture(tap)
+        .onChange(of: scenePhase, initial: true) {
+            switch scenePhase {
+            case .inactive, .background:
+                appModel.gardenOpen = false
+            case .active:
+                appModel.gardenOpen = true
+            @unknown default:
+                appModel.gardenOpen = false
+            }
+        }
     }
 
     var tap: some Gesture {

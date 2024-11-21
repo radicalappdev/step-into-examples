@@ -11,10 +11,14 @@ import RealityKitContent
 
 struct ContentView: View {
 
+    @Environment(AppModel.self) private var appModel
+
     @State var isImmersiveSpacePresented: Bool = false
 
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         VStack(spacing: 24) {
@@ -47,6 +51,16 @@ struct ContentView: View {
             .disabled(!isImmersiveSpacePresented)
         }
         .padding()
+        .onChange(of: scenePhase, initial: true) {
+            switch scenePhase {
+            case .inactive, .background:
+                appModel.mainWindowOpen = false
+            case .active:
+                appModel.mainWindowOpen = true
+            @unknown default:
+                appModel.mainWindowOpen = false
+            }
+        }
     }
 }
 
