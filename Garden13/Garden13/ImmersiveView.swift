@@ -13,9 +13,16 @@ struct ImmersiveView: View {
 
     @Environment(AppModel.self) private var appModel
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.openWindow) private var openWindow
+
+    // We will use this to show an way to restore the main window when it is closed.
+    @State var handTrackedEntity: Entity = {
+        let handAnchor = AnchorEntity(.hand(.left, location: .aboveHand))
+        return handAnchor
+    }()
 
     var body: some View {
-        RealityView { content in
+        RealityView { content, attachments in
             if let root = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
                 content.add(root)
 
@@ -23,8 +30,36 @@ struct ImmersiveView: View {
                     glassSphere.components[HoverEffectComponent.self] = .init()
                     createClones(root, glassSphere: glassSphere)
                 }
+
+                // Make sure to add the hand tracked entity to the scene graph
+                content.add(handTrackedEntity)
+
+                if let attachmentEntity = attachments.entity(for: "AttachmentContent") {
+
+                    // Add the billboard component to keep facing the user
+                    attachmentEntity.components[BillboardComponent.self] = .init()
+
+                    // Add the attachment as a child of the tracked entity
+                    handTrackedEntity.addChild(attachmentEntity)
+
+                }
+            }
+        } update: { content, attachments in
+        } attachments: {
+            Attachment(id: "AttachmentContent") {
+                HStack(spacing: 12) {
+                    Button(action: {
+                        openWindow(id: "MainWindow")
+                    }, label: {
+                        Image(systemName: "arrow.2.circlepath.circle")
+                    })
+
+                }
+                .opacity(appModel.mainWindowOpen ? 0 : 1)
             }
         }
+
+
         .preferredSurroundingsEffect(.colorMultiply(.stepBack02))
         .gesture(tap)
         .onChange(of: scenePhase, initial: true) {
