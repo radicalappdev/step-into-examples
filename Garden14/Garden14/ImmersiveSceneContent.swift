@@ -1,5 +1,5 @@
 //
-//  ImmersiveSpaceFull.swift
+//  ImmersiveSceneContent.swift
 //  Garden14
 //
 //  Created by Joseph Simpson on 11/22/24.
@@ -9,10 +9,9 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct ImmersiveViewFull: View {
+struct ImmersiveSceneContent: View {
 
     @Environment(AppModel.self) private var appModel
-    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.openWindow) private var openWindow
 
     // We will use this to show an way to restore the main window when it is closed.
@@ -31,17 +30,10 @@ struct ImmersiveViewFull: View {
                     createClones(root, glassSphere: glassSphere)
                 }
 
-                // Make sure to add the hand tracked entity to the scene graph
                 content.add(handTrackedEntity)
-
                 if let attachmentEntity = attachments.entity(for: "AttachmentContent") {
-
-                    // Add the billboard component to keep facing the user
                     attachmentEntity.components[BillboardComponent.self] = .init()
-
-                    // Add the attachment as a child of the tracked entity
                     handTrackedEntity.addChild(attachmentEntity)
-
                 }
             }
         } update: { content, attachments in
@@ -58,18 +50,7 @@ struct ImmersiveViewFull: View {
                 .opacity(appModel.mainWindowOpen ? 0 : 1)
             }
         }
-
         .gesture(tap)
-        .onChange(of: scenePhase, initial: true) {
-            switch scenePhase {
-            case .inactive, .background:
-                appModel.gardenFullOpen = false
-            case .active:
-                appModel.gardenFullOpen = true
-            @unknown default:
-                appModel.gardenFullOpen = false
-            }
-        }
     }
 
     var tap: some Gesture {
