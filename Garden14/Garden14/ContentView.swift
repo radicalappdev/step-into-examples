@@ -28,47 +28,21 @@ struct ContentView: View {
             Text("Immersive Spaces")
                 .font(.extraLargeTitle)
 
-            Button(action: {
-                Task {
-                    if(appModel.gardenMixedOpen) {
-                        await dismissImmersiveSpace()
-                        return
-                    } else if (!appModel.gardenMixedOpen) {
-                        await openImmersiveSpace(id: "GardenSceneMixed")
-                    }
-                }
-            }, label: {
-                Text(appModel.gardenMixedOpen ? "Close Mixed Space" :"Open Mixed Space")
-            })
-
-            Button(action: {
-                Task {
-                    if(appModel.gardenProgressiveOpen) {
-                        await dismissImmersiveSpace()
-                        return
-                    } else if (!appModel.gardenProgressiveOpen) {
-                        await openImmersiveSpace(id: "GardenSceneProgressive")
-                    }
-                }
-            }, label: {
-                Text(appModel.gardenProgressiveOpen ? "Close Progressive Space" :"Open Progressive Space")
-            })
-
-            Button(action: {
-                Task {
-                    if(appModel.gardenFullOpen) {
-                        await dismissImmersiveSpace()
-                        return
-                    } else if (!appModel.gardenFullOpen) {
-                        await openImmersiveSpace(id: "GardenSceneFull")
-                    }
-                }
-            }, label: {
-                Text(appModel.gardenFullOpen ? "Close Full Space" :"Open Full Space")
-            })
-
-
-
+            ImmersiveSpaceButton(
+                isOpen: appModel.gardenMixedOpen,
+                spaceID: "GardenSceneMixed",
+                label: "Mixed"
+            )
+            ImmersiveSpaceButton(
+                isOpen: appModel.gardenProgressiveOpen,
+                spaceID: "GardenSceneProgressive",
+                label: "Progressive"
+            )
+            ImmersiveSpaceButton(
+                isOpen: appModel.gardenFullOpen,
+                spaceID: "GardenSceneFull",
+                label: "Full"
+            )
         }
         .padding()
         .onChange(of: scenePhase, initial: true) {
@@ -81,5 +55,28 @@ struct ContentView: View {
                 appModel.mainWindowOpen = false
             }
         }
+    }
+}
+
+struct ImmersiveSpaceButton: View {
+    let isOpen: Bool
+    let spaceID: String
+    let label: String
+
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+
+    var body: some View {
+        Button(action: {
+            Task {
+                if isOpen {
+                    await dismissImmersiveSpace()
+                } else {
+                    await openImmersiveSpace(id: spaceID)
+                }
+            }
+        }, label: {
+            Text(isOpen ? "Close \(label) Space" : "Open \(label) Space")
+        })
     }
 }
