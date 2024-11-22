@@ -59,8 +59,6 @@ struct ImmersiveViewProgressive: View {
             }
         }
 
-
-        .preferredSurroundingsEffect(.colorMultiply(.stepBack02))
         .gesture(tap)
         .onChange(of: scenePhase, initial: true) {
             switch scenePhase {

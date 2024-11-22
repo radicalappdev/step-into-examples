@@ -46,7 +46,7 @@ struct ContentView: View {
                     if(appModel.gardenProgressiveOpen) {
                         await dismissImmersiveSpace()
                         return
-                    } else if (!appModel.gardenMixedOpen) {
+                    } else if (!appModel.gardenProgressiveOpen) {
                         await openImmersiveSpace(id: "GardenSceneProgressive")
                     }
                 }
@@ -59,7 +59,7 @@ struct ContentView: View {
                     if(appModel.gardenFullOpen) {
                         await dismissImmersiveSpace()
                         return
-                    } else if (!appModel.gardenMixedOpen) {
+                    } else if (!appModel.gardenFullOpen) {
                         await openImmersiveSpace(id: "GardenSceneFull")
                     }
                 }

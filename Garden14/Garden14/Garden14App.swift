@@ -25,10 +25,10 @@ struct Garden14App: App {
         }
 
         ImmersiveSpace(id: "GardenSceneProgressive") {
-            ImmersiveViewMixed()
+            ImmersiveViewProgressive()
                 .environment(appModel)
         }
-        .immersionStyle(selection: .constant(.progressive), in: .progressive)
+        .immersionStyle(selection: $appModel.progressiveGarden, in: .progressive)
 
         ImmersiveSpace(id: "GardenSceneFull") {
             ImmersiveViewFull()
