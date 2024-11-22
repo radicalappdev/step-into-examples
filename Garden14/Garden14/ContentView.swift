@@ -30,41 +30,41 @@ struct ContentView: View {
 
             Button(action: {
                 Task {
-                    if(appModel.gardenOpen) {
+                    if(appModel.gardenMixedOpen) {
                         await dismissImmersiveSpace()
                         return
-                    } else if (!appModel.gardenOpen) {
+                    } else if (!appModel.gardenMixedOpen) {
                         await openImmersiveSpace(id: "GardenSceneMixed")
                     }
                 }
             }, label: {
-                Text(appModel.gardenOpen ? "Close Mixed Space" :"Open Mixed Space")
+                Text(appModel.gardenMixedOpen ? "Close Mixed Space" :"Open Mixed Space")
             })
 
             Button(action: {
                 Task {
-                    if(appModel.gardenOpen) {
+                    if(appModel.gardenProgressiveOpen) {
                         await dismissImmersiveSpace()
                         return
-                    } else if (!appModel.gardenOpen) {
+                    } else if (!appModel.gardenMixedOpen) {
                         await openImmersiveSpace(id: "GardenSceneProgressive")
                     }
                 }
             }, label: {
-                Text(appModel.gardenOpen ? "Close Progressive Space" :"Open Progressive Space")
+                Text(appModel.gardenProgressiveOpen ? "Close Progressive Space" :"Open Progressive Space")
             })
 
             Button(action: {
                 Task {
-                    if(appModel.gardenOpen) {
+                    if(appModel.gardenFullOpen) {
                         await dismissImmersiveSpace()
                         return
-                    } else if (!appModel.gardenOpen) {
+                    } else if (!appModel.gardenMixedOpen) {
                         await openImmersiveSpace(id: "GardenSceneFull")
                     }
                 }
             }, label: {
-                Text(appModel.gardenOpen ? "Close Full Space" :"Open Full Space")
+                Text(appModel.gardenFullOpen ? "Close Full Space" :"Open Full Space")
             })
 
 

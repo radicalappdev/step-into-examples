@@ -65,11 +65,11 @@ struct ImmersiveViewMixed: View {
         .onChange(of: scenePhase, initial: true) {
             switch scenePhase {
             case .inactive, .background:
-                appModel.gardenOpen = false
+                appModel.gardenMixedOpen = false
             case .active:
-                appModel.gardenOpen = true
+                appModel.gardenMixedOpen = true
             @unknown default:
-                appModel.gardenOpen = false
+                appModel.gardenMixedOpen = false
             }
         }
     }

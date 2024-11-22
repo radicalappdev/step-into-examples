@@ -28,6 +28,7 @@ struct Garden14App: App {
             ImmersiveViewMixed()
                 .environment(appModel)
         }
+        .immersionStyle(selection: .constant(.progressive), in: .progressive)
 
         ImmersiveSpace(id: "GardenSceneFull") {
             ImmersiveViewFull()

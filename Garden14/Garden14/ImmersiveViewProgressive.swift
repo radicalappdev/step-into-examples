@@ -1,5 +1,5 @@
 //
-//  ImmersiveSpaceFull.swift
+//  ImmersiveViewProgressive.swift
 //  Garden14
 //
 //  Created by Joseph Simpson on 11/22/24.
@@ -9,7 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct ImmersiveViewFull: View {
+struct ImmersiveViewProgressive: View {
 
     @Environment(AppModel.self) private var appModel
     @Environment(\.scenePhase) private var scenePhase
@@ -59,15 +59,17 @@ struct ImmersiveViewFull: View {
             }
         }
 
+
+        .preferredSurroundingsEffect(.colorMultiply(.stepBack02))
         .gesture(tap)
         .onChange(of: scenePhase, initial: true) {
             switch scenePhase {
             case .inactive, .background:
-                appModel.gardenFullOpen = false
+                appModel.gardenProgressiveOpen = false
             case .active:
-                appModel.gardenFullOpen = true
+                appModel.gardenProgressiveOpen = true
             @unknown default:
-                appModel.gardenFullOpen = false
+                appModel.gardenProgressiveOpen = false
             }
         }
     }
