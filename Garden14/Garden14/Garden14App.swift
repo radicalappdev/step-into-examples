@@ -19,10 +19,20 @@ struct Garden14App: App {
         }
         .defaultSize(CGSize(width: 600, height: 600))
 
-        // Give the space an ID and a view
-        ImmersiveSpace(id: "GardenScene") {
-            ImmersiveView()
+        ImmersiveSpace(id: "GardenSceneMixed") {
+            ImmersiveViewMixed()
                 .environment(appModel)
         }
+
+        ImmersiveSpace(id: "GardenSceneProgressive") {
+            ImmersiveViewMixed()
+                .environment(appModel)
+        }
+
+        ImmersiveSpace(id: "GardenSceneFull") {
+            ImmersiveViewFull()
+                .environment(appModel)
+        }
+        .immersionStyle(selection: .constant(.full), in: .full)
     }
 }

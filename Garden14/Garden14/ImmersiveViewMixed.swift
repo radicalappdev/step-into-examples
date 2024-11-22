@@ -9,7 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct ImmersiveView: View {
+struct ImmersiveViewMixed: View {
 
     @Environment(AppModel.self) private var appModel
     @Environment(\.scenePhase) private var scenePhase

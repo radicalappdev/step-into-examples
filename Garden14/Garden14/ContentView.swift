@@ -34,12 +34,40 @@ struct ContentView: View {
                         await dismissImmersiveSpace()
                         return
                     } else if (!appModel.gardenOpen) {
-                        await openImmersiveSpace(id: "GardenScene")
+                        await openImmersiveSpace(id: "GardenSceneMixed")
                     }
                 }
             }, label: {
-                Text(appModel.gardenOpen ? "Close Immersive Space" :"Open Immersive Space")
+                Text(appModel.gardenOpen ? "Close Mixed Space" :"Open Mixed Space")
             })
+
+            Button(action: {
+                Task {
+                    if(appModel.gardenOpen) {
+                        await dismissImmersiveSpace()
+                        return
+                    } else if (!appModel.gardenOpen) {
+                        await openImmersiveSpace(id: "GardenSceneProgressive")
+                    }
+                }
+            }, label: {
+                Text(appModel.gardenOpen ? "Close Progressive Space" :"Open Progressive Space")
+            })
+
+            Button(action: {
+                Task {
+                    if(appModel.gardenOpen) {
+                        await dismissImmersiveSpace()
+                        return
+                    } else if (!appModel.gardenOpen) {
+                        await openImmersiveSpace(id: "GardenSceneFull")
+                    }
+                }
+            }, label: {
+                Text(appModel.gardenOpen ? "Close Full Space" :"Open Full Space")
+            })
+
+
 
         }
         .padding()
@@ -54,9 +82,4 @@ struct ContentView: View {
             }
         }
     }
-}
-
-#Preview(windowStyle: .automatic) {
-    ContentView()
-
 }
