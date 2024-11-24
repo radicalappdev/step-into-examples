@@ -28,6 +28,9 @@ struct ContentView: View {
             Text("Immersive Spaces")
                 .font(.extraLargeTitle)
 
+            Text("A space is open: \(appModel.immersiveSpaceActive ? "Yes" : "No")")
+                .font(.system(size: 24))
+
             ImmersiveSpaceButton(
                 isOpen: appModel.gardenMixedOpen,
                 spaceID: "GardenSceneMixed",
@@ -63,15 +66,17 @@ struct ImmersiveSpaceButton: View {
     let spaceID: String
     let label: String
 
+    @Environment(AppModel.self) private var appModel
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
 
     var body: some View {
         Button(action: {
             Task {
-                if isOpen {
+                if appModel.immersiveSpaceActive {
                     await dismissImmersiveSpace()
-                } else {
+                }
+                if !isOpen {
                     await openImmersiveSpace(id: spaceID)
                 }
             }

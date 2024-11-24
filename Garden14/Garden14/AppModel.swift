@@ -20,5 +20,10 @@ class AppModel {
         0.2...0.8,
         initialAmount: 0.4
     )
+
+    /// This willl return true if any one of our immersice spaces are open
+    var immersiveSpaceActive: Bool {
+        return gardenMixedOpen || gardenProgressiveOpen || gardenFullOpen
+    }
 }
 
