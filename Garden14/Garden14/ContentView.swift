@@ -46,6 +46,30 @@ struct ContentView: View {
                 spaceID: "GardenSceneFull",
                 label: "Full"
             )
+
+            VStack {
+                Divider()
+                Text("Upper Limbs")
+                HStack {
+                    Button(action: {
+                        appModel.upperLimpVis = .hidden
+                    }, label: {
+                        Text("Hide")
+                    })
+                    Button(action: {
+                        appModel.upperLimpVis = .visible
+                    }, label: {
+                        Text("Show")
+                    })
+                    Button(action: {
+                        appModel.upperLimpVis = .automatic
+                    }, label: {
+                        Text("Automatic 🤷🏻‍♂️")
+                    })
+
+                }
+            }
+
         }
         .padding()
         .onChange(of: scenePhase, initial: true) {

@@ -35,5 +35,6 @@ struct Garden14App: App {
                 .environment(appModel)
         }
         .immersionStyle(selection: .constant(.full), in: .full)
+        .upperLimbVisibility(appModel.upperLimpVis)
     }
 }

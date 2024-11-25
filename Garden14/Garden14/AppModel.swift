@@ -25,5 +25,8 @@ class AppModel {
     var immersiveSpaceActive: Bool {
         return gardenMixedOpen || gardenProgressiveOpen || gardenFullOpen
     }
+
+    ///
+    var upperLimpVis: Visibility = .visible
 }
 
