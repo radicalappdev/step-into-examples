@@ -27,6 +27,6 @@ class AppModel {
     }
 
     ///
-    var upperLimpVis: Visibility = .visible
+    var upperLimpVis: Visibility = .automatic
 }
 

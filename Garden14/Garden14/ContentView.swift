@@ -49,7 +49,8 @@ struct ContentView: View {
 
             VStack {
                 Divider()
-                Text("Upper Limbs")
+                Text("Upper Limbs: \(appModel.upperLimpVis)")
+
                 HStack {
                     Button(action: {
                         appModel.upperLimpVis = .hidden
@@ -61,6 +62,7 @@ struct ContentView: View {
                     }, label: {
                         Text("Show")
                     })
+                    Spacer()
                     Button(action: {
                         appModel.upperLimpVis = .automatic
                     }, label: {
@@ -69,6 +71,7 @@ struct ContentView: View {
 
                 }
             }
+            .opacity(appModel.immersiveSpaceActive ? 1 : 0)
 
         }
         .padding()
