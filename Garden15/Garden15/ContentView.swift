@@ -48,7 +48,7 @@ struct ImmersiveSpaceButton: View {
                     await dismissImmersiveSpace()
                 }
                 if !isOpen {
-                    await openImmersiveSpace(id: spaceID)
+                    await openImmersiveSpace(id: spaceID, value: value)
                 }
             }
         }, label: {

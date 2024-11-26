@@ -18,9 +18,10 @@ struct Garden15App: App {
                 .environment(appModel)
         }
 
-        ImmersiveSpace(id: "Bubble Garden") {
-            ImmersiveView()
+        ImmersiveSpace(id: "Bubble Garden", for: String.self, content: { $value in
+
+            ImmersiveView(sceneName: $value)
                 .environment(appModel)
-        }
+        })
      }
 }

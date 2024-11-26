@@ -13,15 +13,23 @@ struct ImmersiveView: View {
 
     @Environment(AppModel.self) private var appModel
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.scenePhase) private var scenePhase
 
     @State var handTrackedEntity: Entity = {
         let handAnchor = AnchorEntity(.hand(.left, location: .aboveHand))
         return handAnchor
     }()
 
+    @Binding var sceneName: String?
+
     var body: some View {
-        RealityView { content, attachments in
-            if let root = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
+        RealityView {
+ content,
+            attachments in
+            if let root = try? await Entity(
+                named: sceneName ?? "",
+                in: realityKitContentBundle
+            ) {
                 content.add(root)
 
                 if let glassSphere = root.findEntity(named: "GlassSphere") {
@@ -50,6 +58,16 @@ struct ImmersiveView: View {
             }
         }
         .gesture(tap)
+        .onChange(of: scenePhase, initial: true) {
+            switch scenePhase {
+            case .inactive, .background:
+                appModel.immersiveSpaceOpen = false
+            case .active:
+                appModel.immersiveSpaceOpen = true
+            @unknown default:
+                appModel.immersiveSpaceOpen = false
+            }
+        }
     }
 
     var tap: some Gesture {
@@ -79,7 +97,3 @@ struct ImmersiveView: View {
     }
 }
 
-#Preview(immersionStyle: .mixed) {
-    ImmersiveView()
-        .environment(AppModel())
-}
