@@ -15,47 +15,19 @@ struct ImmersiveView: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.scenePhase) private var scenePhase
 
-    @State var handTrackedEntity: Entity = {
-        let handAnchor = AnchorEntity(.hand(.left, location: .aboveHand))
-        return handAnchor
-    }()
-
     @Binding var sceneName: String?
 
     var body: some View {
-        RealityView {
- content,
-            attachments in
-            if let root = try? await Entity(
-                named: sceneName ?? "",
-                in: realityKitContentBundle
-            ) {
+        RealityView {content in
+            if let root = try? await Entity(named: sceneName ?? "", in: realityKitContentBundle) {
                 content.add(root)
 
                 if let glassSphere = root.findEntity(named: "GlassSphere") {
                     glassSphere.components[HoverEffectComponent.self] = .init()
                     createClones(root, glassSphere: glassSphere)
                 }
-
-                content.add(handTrackedEntity)
-                if let attachmentEntity = attachments.entity(for: "AttachmentContent") {
-                    attachmentEntity.components[BillboardComponent.self] = .init()
-                    handTrackedEntity.addChild(attachmentEntity)
-                }
             }
-        } update: { content, attachments in
-        } attachments: {
-            Attachment(id: "AttachmentContent") {
-                HStack(spacing: 12) {
-                    Button(action: {
-                        openWindow(id: "MainWindow")
-                    }, label: {
-                        Image(systemName: "arrow.2.circlepath.circle")
-                    })
-
-                }
-                .opacity(appModel.mainWindowOpen ? 0 : 1)
-            }
+        } update: { content in
         }
         .gesture(tap)
         .onChange(of: scenePhase, initial: true) {

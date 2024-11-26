@@ -17,6 +17,7 @@ struct Garden15App: App {
             ContentView()
                 .environment(appModel)
         }
+        .defaultSize(CGSize(width: 600, height: 600))
 
         ImmersiveSpace(id: "Bubble Garden", for: String.self, content: { $value in
 

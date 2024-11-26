@@ -25,7 +25,6 @@ struct ContentView: View {
             ImmersiveSpaceButton(isOpen: appModel.immersiveSpaceOpen, spaceID: "Bubble Garden", value: "Red")
             ImmersiveSpaceButton(isOpen: appModel.immersiveSpaceOpen, spaceID: "Bubble Garden", value: "Blue")
             ImmersiveSpaceButton(isOpen: appModel.immersiveSpaceOpen, spaceID: "Bubble Garden", value: "Green")
-
         }
         .padding()
     }
