@@ -62,10 +62,13 @@ struct ImmersiveView: View {
             switch scenePhase {
             case .inactive, .background:
                 appModel.immersiveSpaceOpen = false
+                appModel.immersiveSpaceValue = ""
             case .active:
                 appModel.immersiveSpaceOpen = true
+                appModel.immersiveSpaceValue = sceneName ?? ""
             @unknown default:
                 appModel.immersiveSpaceOpen = false
+                appModel.immersiveSpaceValue = ""
             }
         }
     }
