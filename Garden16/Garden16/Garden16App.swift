@@ -17,10 +17,28 @@ struct Garden16App: App {
             ContentView()
                 .environment(appModel)
         }
-        .defaultSize(width: 500, height: 500)
+        .defaultSize(width: 500, height: 700)
+
+        // Example 1: The initial size of the view is based on the content
+        WindowGroup(id: "PinkFlower") {
+            VStack {
+                Text("🌸")
+                Text("🌸🌸🌸🌸🌸")
+                Text("🌸")
+            }
+            .font(.system(size: 128))
+        }
+        .windowResizability(.contentMinSize)
+        .defaultWindowPlacement { content, context in
+            let size = content.sizeThatFits(.unspecified)
+            if let mainWindow = context.windows.first {
+                return WindowPlacement(.trailing(mainWindow), size: size)
+            }
+            return WindowPlacement(.none)
+        }
 
 
-        // Example 1: hardcoded frame size on the view, using sizeThatFits(.unspecified) to calculate the default placement
+        // Example 2: hardcoded frame size on the view, using sizeThatFits(.unspecified) to calculate the default placement
         WindowGroup(id: "RedFlower") {
             VStack {
                 Text("🌺🌺🌺")
@@ -34,12 +52,12 @@ struct Garden16App: App {
         .defaultWindowPlacement { content, context in
             let size = content.sizeThatFits(.unspecified)
             if let mainWindow = context.windows.first {
-                return WindowPlacement(.leading(mainWindow), size: size)
+                return WindowPlacement(.trailing(mainWindow), size: size)
             }
             return WindowPlacement(.none)
         }
 
-        // Example 2: Set a min and max frame on the view. Use defaultSize to request an initial size, then pass in a larger size to the window placement to account for the size of the ornaments
+        // Example 3: Set a min and max frame on the view. Use defaultSize to request an initial size, then pass in a larger size to the window placement to account for the size of the ornaments
         WindowGroup(id: "YellowFlower") {
 
             TabView {
@@ -81,3 +99,5 @@ struct Garden16App: App {
 
      }
 }
+
+
