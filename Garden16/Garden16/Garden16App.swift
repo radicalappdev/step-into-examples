@@ -34,6 +34,44 @@ struct Garden16App: App {
         .defaultWindowPlacement { content, context in
             let size = content.sizeThatFits(.unspecified)
             if let mainWindow = context.windows.first {
+                return WindowPlacement(.leading(mainWindow), size: size)
+            }
+            return WindowPlacement(.none)
+        }
+
+        WindowGroup(id: "YellowFlower") {
+
+            TabView {
+
+                VStack {
+                    Text("🌼🌼🌼")
+                    Text("🌼🌼🌼")
+                    Text("🌼🌼🌼")
+                }
+                .font(.system(size: 128))
+                .tabItem {
+                    Image(systemName: "1.circle.fill")
+                    Text("Sunflower")
+                }
+
+                VStack {
+                    Text("💐💐💐")
+                    Text("💐💐💐")
+                    Text("💐💐💐")
+                }
+                .font(.system(size: 128))
+                .tabItem {
+                    Image(systemName: "2.circle.fill")
+                    Text("Roses")
+                }
+            }
+            .frame(width: 600, height: 500)
+
+        }
+        .windowResizability(.contentMinSize)
+        .defaultWindowPlacement { content, context in
+            let size = content.sizeThatFits(.unspecified)
+            if let mainWindow = context.windows.first {
                 return WindowPlacement(.trailing(mainWindow), size: size)
             }
             return WindowPlacement(.none)
