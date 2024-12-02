@@ -39,6 +39,7 @@ struct Garden16App: App {
             return WindowPlacement(.none)
         }
 
+        // Example 2: Set a min and max frame on the view. Use defaultSize to request an initial size, then pass in a larger size to the window placement to account for the size of the ornaments
         WindowGroup(id: "YellowFlower") {
 
             TabView {
@@ -65,12 +66,13 @@ struct Garden16App: App {
                     Text("Roses")
                 }
             }
-            .frame(width: 600, height: 500)
+            .frame(minWidth: 500, maxWidth: 700, minHeight: 400, maxHeight: 700)
 
         }
-        .windowResizability(.contentMinSize)
+        .windowResizability(.contentSize)
+        .defaultSize(CGSize(width: 600, height: 500))
         .defaultWindowPlacement { content, context in
-            let size = content.sizeThatFits(.unspecified)
+            let size = CGSize(width: 700, height: 500)
             if let mainWindow = context.windows.first {
                 return WindowPlacement(.trailing(mainWindow), size: size)
             }
