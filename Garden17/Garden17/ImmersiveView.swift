@@ -12,10 +12,10 @@ import RealityKitContent
 struct ImmersiveView: View {
 
     @Environment(AppModel.self) private var appModel
-    @State var immersionAmount: Double = 0
+    @State var immersionAmount: Float = 0
 
-    var speed: Double = 1
-    var birthRate: Double = 3000
+    var speed: Float = 1
+    var birthRate: Float = 3000
 
     var body: some View {
         RealityView { content in
@@ -40,10 +40,9 @@ struct ImmersiveView: View {
                 if var snowParticles = snow.components[ParticleEmitterComponent.self] {
 
                     // Adjust the speed and birthrate using the immersion amount
-                    snowParticles.speed = Float(speed * immersionAmount)
-                    snowParticles.mainEmitter.birthRate = Float(
-                        birthRate * immersionAmount
-                    )
+                    snowParticles.speed = speed * immersionAmount
+                    snowParticles.mainEmitter.birthRate = birthRate * immersionAmount
+
 
                     // Reassign the component to the entity
                     snow.components.set(snowParticles)
@@ -51,7 +50,7 @@ struct ImmersiveView: View {
             }
         }
         .onImmersionChange { inintial, new in
-            immersionAmount = new.amount ?? 0
+            immersionAmount = Float(new.amount ?? 0)
         }
     }
 }
