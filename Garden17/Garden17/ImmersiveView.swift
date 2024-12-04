@@ -20,6 +20,20 @@ struct ImmersiveView: View {
     var body: some View {
         RealityView { content in
 
+            let floorMaterial = SimpleMaterial(
+                color: .gray,
+                roughness: 0.5,
+                isMetallic: false
+            )
+
+            let floor = ModelEntity(
+                mesh: .generateCylinder(height: 0.01, radius: 6),
+                materials: [floorMaterial]
+            )
+            floor.name = "Floor"
+            floor.position.y = -1
+            content.add(floor)
+
             // Create some snow!
             var snowParticles = ParticleEmitterComponent.Presets.snow
             snowParticles.speed = 0.5
