@@ -21,7 +21,7 @@ class AppModel {
 
     var progressiveGarden: ImmersionStyle = .progressive(
         0.2...0.8,
-        initialAmount: 0.4
+        initialAmount: 0.6
     )
     
 }

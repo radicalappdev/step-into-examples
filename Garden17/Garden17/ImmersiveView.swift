@@ -11,15 +11,24 @@ import RealityKitContent
 
 struct ImmersiveView: View {
 
+    @State var snow: Entity?
+
     var body: some View {
         RealityView { content in
-            // Add the initial RealityKit content
-            if let immersiveContentEntity = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
-                content.add(immersiveContentEntity)
 
-                // Put skybox here.  See example in World project available at
-                // https://developer.apple.com/
-            }
+            // Create some snow!
+            var snowParticles = ParticleEmitterComponent.Presets.snow
+            snowParticles.speed = 0.5
+            snowParticles.mainEmitter.birthRate = 2000
+            snowParticles.emitterShape = .sphere
+            snowParticles.emitterShapeSize = [5,5,5]
+            snowParticles.mainEmitter.size = 0.01
+
+            let snowEntity = Entity()
+            snowEntity.components.set(snowParticles)
+            content.add(snowEntity)
+            snow = snowEntity // stash this to use later
+
         }
     }
 }

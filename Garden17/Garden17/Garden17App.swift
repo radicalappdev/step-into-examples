@@ -17,6 +17,7 @@ struct Garden17App: App {
             ContentView()
                 .environment(appModel)
         }
+        .defaultSize(CGSize(width: 600, height: 600))
 
         ImmersiveSpace(id: appModel.immersiveSpaceID) {
             ImmersiveView()
