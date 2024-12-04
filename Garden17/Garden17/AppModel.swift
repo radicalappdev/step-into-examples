@@ -20,8 +20,8 @@ class AppModel {
     var immersiveSpaceState = ImmersiveSpaceState.closed
 
     var progressiveGarden: ImmersionStyle = .progressive(
-        0.2...0.8,
-        initialAmount: 0.6
+        0.05...1.0,
+        initialAmount: 0.3
     )
     
 }
